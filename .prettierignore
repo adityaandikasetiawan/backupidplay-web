@@ -1,0 +1,10 @@
+dist
+node_modules
+build
+.git
+.next/
+next-env.d.ts
+.env.*
+.json
+.js
+.mjs

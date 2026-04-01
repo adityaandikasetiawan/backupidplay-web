@@ -1,0 +1,23 @@
+{
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "options": {
+        "semi": true,
+        "tabWidth": 2,
+        "useTabs": false,
+        "printWidth": 100,
+        "endOfLine": "auto",
+        "singleQuote": true,
+        "proseWrap": "never",
+        "bracketSpacing": true,
+        "trailingComma": "none",
+        "jsxSingleQuote": false,
+        "bracketSameLine": false,
+        "jsxBracketSameLine": false,
+        "singleAttributePerLine": true,
+        "embeddedLanguageFormatting": "off"
+      }
+    }
+  ]
+}
