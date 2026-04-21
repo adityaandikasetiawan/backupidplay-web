@@ -15,6 +15,7 @@ import { type Article } from '@/types/article';
 import Image from 'next/image';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
+import { resolveImageUrl, resolveThumbnailUrl } from '@/lib/services/imageService';
 
 interface BannerImage {
   id: number;
@@ -84,7 +85,6 @@ const RegionalPageDetail = () => {
   const router = useRouter();
   const params = useParams();
   const region = params?.region as string | undefined;
-  const cmsPublicBaseUrl = process.env.NEXT_PUBLIC_CMS_URL || 'https://cms.idplay.co.id';
   const [regionData, setRegionData] = useState<any | null>(null);
   const [regionalBanners, setRegionalBanners] = useState<BannerData[]>([]);
   const [nationalBanners, setNationalBanners] = useState<NationalBanner[]>([]);
@@ -193,16 +193,10 @@ const RegionalPageDetail = () => {
     return new Intl.NumberFormat('id-ID').format(price);
   };
 
-  // Helper function to get image URL with CMS prefix
-  const getImageUrl = (url: string | undefined | null): string => {
-    if (!url) return '';
-    if (url.startsWith('http')) return url;
-    if (url.startsWith('/imgs') || url.startsWith('/package')) return url;
-    return `${cmsPublicBaseUrl}${url}`;
-  };
+  const getImageUrl = (url: string | undefined | null): string => resolveImageUrl(url ?? '') ?? '';
 
   const ProductCard = ({ product }: { product: Product }) => {
-    const thumbnailUrl = product.thumbnail?.url ? getImageUrl(product.thumbnail.url) : null;
+    const thumbnailUrl = resolveThumbnailUrl(product.thumbnail);
 
     return (
       <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-transparent">

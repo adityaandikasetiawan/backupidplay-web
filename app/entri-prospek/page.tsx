@@ -527,17 +527,58 @@ function EntriProspekForm() {
   );
 }
 
+function JotformEntriProspek() {
+  const searchParams = useSearchParams();
+  const jotformUrl = useMemo(() => {
+    const baseUrl = 'https://form.jotform.com/251138666667064';
+    const qs = searchParams.toString();
+    return qs ? `${baseUrl}?${qs}` : baseUrl;
+  }, [searchParams]);
+
+  return (
+    <iframe
+      title="idPlay Form Berlangganan"
+      src={jotformUrl}
+      className="w-full min-h-screen border-0"
+      allow="geolocation; microphone; camera"
+    />
+  );
+}
+
 export default function EntriProspekPage() {
+  const useJotform = true;
+
+  if (useJotform) {
+    return (
+      <div className="min-h-screen bg-white">
+        <Suspense
+          fallback={
+            <div className="mx-auto w-full max-w-5xl px-4 py-8">
+              <div className="animate-pulse">
+                <div className="h-8 bg-gray-200 rounded w-1/3 mb-4"></div>
+                <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+              </div>
+            </div>
+          }
+        >
+          <JotformEntriProspek />
+        </Suspense>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-white">
-      <Suspense fallback={
-        <div className="mx-auto w-full max-w-5xl px-4 py-8">
-          <div className="animate-pulse">
-            <div className="h-8 bg-gray-200 rounded w-1/3 mb-4"></div>
-            <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+      <Suspense
+        fallback={
+          <div className="mx-auto w-full max-w-5xl px-4 py-8">
+            <div className="animate-pulse">
+              <div className="h-8 bg-gray-200 rounded w-1/3 mb-4"></div>
+              <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+            </div>
           </div>
-        </div>
-      }>
+        }
+      >
         <EntriProspekForm />
       </Suspense>
     </div>

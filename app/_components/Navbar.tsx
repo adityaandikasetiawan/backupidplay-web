@@ -70,6 +70,44 @@ const Navbar = () => {
     };
   }, [showProfileDropdown]);
 
+  useEffect(() => {
+    const sessionKey = '__next_chunk_reload_ts__';
+
+    const isChunkLoadError = (reason: unknown): boolean => {
+      const message =
+        typeof reason === 'string'
+          ? reason
+          : typeof reason === 'object' && reason !== null
+            ? String((reason as any).message ?? reason)
+            : '';
+
+      const name = typeof reason === 'object' && reason !== null ? (reason as any).name : undefined;
+      if (name === 'ChunkLoadError') return true;
+      return /ChunkLoadError|Loading chunk \d+ failed/i.test(message);
+    };
+
+    const reloadSafely = () => {
+      try {
+        const now = Date.now();
+        const last = Number(sessionStorage.getItem(sessionKey) || 0);
+        if (now - last < 30_000) return;
+        sessionStorage.setItem(sessionKey, String(now));
+      } catch {
+        return;
+      }
+      window.location.reload();
+    };
+
+    const onUnhandledRejection = (event: PromiseRejectionEvent) => {
+      if (isChunkLoadError(event.reason)) reloadSafely();
+    };
+
+    window.addEventListener('unhandledrejection', onUnhandledRejection);
+    return () => {
+      window.removeEventListener('unhandledrejection', onUnhandledRejection);
+    };
+  }, []);
+
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
     if (!isMenuOpen) {

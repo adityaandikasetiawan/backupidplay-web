@@ -7,7 +7,7 @@ import { Alert } from "@/components/ui/alert";
 import { Skeleton } from "@/components/ui/skeleton";
 import TransactionTable from "./_components/TransactionTable";
 import ProductCarousel from "./_components/ProductCarousel";
-// import SpeedTest from "./_components/SpeedTest";
+import SpeedTest from "./_components/SpeedTest";
 import {
   Select,
   SelectContent,
@@ -529,7 +529,7 @@ export default function Dashboard() {
 
         <div className="space-y-6 flex-1">
           <div className="">
-            {/* <SpeedTest customerDashboard={customerDashboard} /> */}
+            <SpeedTest customerDashboard={customerDashboard} />
           </div>
 
           <div className="bg-white p-4 rounded-xl shadow-lg">

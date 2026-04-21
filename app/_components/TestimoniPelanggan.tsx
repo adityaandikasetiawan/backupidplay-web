@@ -8,14 +8,7 @@ import Image from 'next/image';
 import { useTestimonials } from '@/hooks/useTestimoni';
 import { type Testimonial } from '@/types/testimoni';
 import LoadingSkeletonTestimoni from './loadingSkeletonTestimoni';
-
-// Helper to get full image URL from relative path
-const getCmsImageUrl = (url: string | undefined) => {
-  if (!url) return '';
-  if (url.startsWith('http')) return url;
-  const cmsPublicBaseUrl = process.env.NEXT_PUBLIC_CMS_URL || 'https://cms.idplay.co.id';
-  return `${cmsPublicBaseUrl}${url}`;
-};
+import { resolveAvatarUrl } from '@/lib/services/imageService';
 
 const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => {
   const renderStars = (rating: number) => {
@@ -52,8 +45,7 @@ const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => {
   };
 
   // Get avatar URL with fallback, thumbnail format for compressed size
-  const rawAvatarUrl = testimonial.avatar?.url || testimonial.avatar?.formats?.thumbnail?.url;
-  const avatarUrl = getCmsImageUrl(rawAvatarUrl);
+  const avatarUrl = resolveAvatarUrl(testimonial.avatar);
 
   return (
     <div className="bg-white rounded-2xl p-6 w-[347px] mx-3 flex-shrink-0">

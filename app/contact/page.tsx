@@ -42,9 +42,9 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-bold text-gray-900 mb-1">Office Location</h3>
                     <p className="text-gray-600">
-                      Jl. Mampang Prapatan Raya No. 123<br />
-                      Jakarta Selatan, 12790<br />
-                      Indonesia
+                      Blok E 11-15A Rukan Artha Gading Niaga RT.18<br />
+                      RT.18/RW.8, Klp. Gading Bar., Kec. Klp. Gading<br />
+                      Jkt Utara, Daerah Khusus Ibukota Jakarta 14240
                     </p>
                   </div>
                 </div>
@@ -56,8 +56,7 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-bold text-gray-900 mb-1">Email</h3>
                     <p className="text-gray-600">
-                      <a href="mailto:support@idplay.co.id" className="hover:text-orange-500 transition-colors">support@idplay.co.id</a> (Support)<br />
-                      <a href="mailto:sales@idplay.co.id" className="hover:text-orange-500 transition-colors">sales@idplay.co.id</a> (Sales)
+                      <a href="mailto:cx.ays@supercorridor.co.id" className="hover:text-orange-500 transition-colors">cx.ays@supercorridor.co.id</a>
                     </p>
                   </div>
                 </div>
@@ -69,7 +68,7 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-bold text-gray-900 mb-1">Phone</h3>
                     <p className="text-gray-600">
-                      <a href="tel:+622112345678" className="hover:text-orange-500 transition-colors">+62 21 1234 5678</a>
+                      <a href="tel:+6282289986477" className="hover:text-orange-500 transition-colors">+6282289986477</a>
                     </p>
                     <p className="text-sm text-gray-500 mt-1">Mon - Fri, 09:00 - 18:00 WIB</p>
                   </div>

@@ -152,7 +152,7 @@ const Footer = () => {
                   <Instagram className="w-4 h-4" />
                 </a>
                 <a
-                  href="https://www.facebook.com/superkoridor.idplay"
+                  href="https://www.facebook.com/cx.idplay"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-8 h-8 bg-gray-300 rounded flex items-center justify-center hover:bg-orange-500 hover:text-white transition-colors"
@@ -160,7 +160,7 @@ const Footer = () => {
                   <Facebook className="w-4 h-4" />
                 </a>
                 <a
-                  href="https://www.tiktok.com/@supercorridor.idplay"
+                  href="https://www.tiktok.com/@cx.idplay"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-8 h-8 bg-gray-300 rounded flex items-center justify-center hover:bg-orange-500 hover:text-white transition-colors"

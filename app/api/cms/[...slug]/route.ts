@@ -32,7 +32,7 @@ const handleRequest = async (
       ? process.env.CMS_URL
       : isValidCmsUrl(process.env.NEXT_PUBLIC_CMS_URL)
         ? process.env.NEXT_PUBLIC_CMS_URL
-        : 'http://127.0.0.1:3032';
+        : 'http://127.0.0.1:1337';
 
     const cmsBaseUrl = normalizeCmsBaseUrl(rawCmsBaseUrl);
     debugCmsBaseUrl = cmsBaseUrl;
@@ -43,12 +43,19 @@ const handleRequest = async (
     const queryString = searchParams.toString();
     const fullPath = queryString ? `${cmsPath}?${queryString}` : cmsPath;
 
-    const fetchOptions: RequestInit = {
-      method,
-      headers: { 'Content-Type': 'application/json' },
-      next: { revalidate: 60 },
-    };
+    const upstreamHeaders: Record<string, string> = {};
+    const accept = request.headers.get('accept');
+    const authorization = request.headers.get('authorization');
+    const cookie = request.headers.get('cookie');
+    const contentType = request.headers.get('content-type');
+
+    if (accept) upstreamHeaders.accept = accept;
+    if (authorization) upstreamHeaders.authorization = authorization;
+    if (cookie) upstreamHeaders.cookie = cookie;
+
+    const fetchOptions: RequestInit = { method, headers: upstreamHeaders, next: { revalidate: 60 } };
     if (['POST', 'PUT'].includes(method)) {
+      fetchOptions.headers = { ...upstreamHeaders, 'Content-Type': contentType ?? 'application/json' };
       fetchOptions.body = JSON.stringify(await request.json());
     }
 
@@ -64,12 +71,18 @@ const handleRequest = async (
       }
     })();
     const response = await fetch(targetUrl, fetchOptions);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    const responseContentType = response.headers.get('content-type') ?? '';
+
+    if (responseContentType.includes('application/json')) {
+      const data = await response.json().catch(() => null);
+      return NextResponse.json(data, { status: response.status });
     }
 
-    const data = await response.json();
-    return NextResponse.json(data);
+    const text = await response.text();
+    return new NextResponse(text, {
+      status: response.status,
+      headers: responseContentType ? { 'content-type': responseContentType } : undefined,
+    });
   } catch (error) {
     console.error(`CMS Proxy Error (${method}):`, error);
     const message = error instanceof Error ? error.message : String(error);

@@ -62,20 +62,24 @@ function BannerSection() {
           }}
         >
           <CarouselContent>
-            {banners.map((banner) => (
-              <CarouselItem key={banner.id}>
-                <div className="relative w-full">
-                  <Image
-                    src={resolveImageUrl(banner.image) || ''}
-                    alt={banner.altname || banner.image.alternativeText || 'Banner'}
-                    width={banner.image.width}
-                    height={banner.image.height}
-                    className="w-full h-auto object-cover rounded-lg"
-                    priority
-                  />
-                </div>
-              </CarouselItem>
-            ))}
+            {banners.map((banner) => {
+              const src = resolveImageUrl(banner.image);
+              if (!src) return null;
+              return (
+                <CarouselItem key={banner.id}>
+                  <div className="relative w-full">
+                    <Image
+                      src={src}
+                      alt={banner.altname || banner.image?.alternativeText || 'Banner'}
+                      width={banner.image?.width || 1200}
+                      height={banner.image?.height || 400}
+                      className="w-full h-auto object-cover rounded-lg"
+                      priority
+                    />
+                  </div>
+                </CarouselItem>
+              );
+            })}
           </CarouselContent>
         </Carousel>
 

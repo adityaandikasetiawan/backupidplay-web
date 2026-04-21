@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import type { Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
+import Script from 'next/script';
 import './globals.css';
 import Navbar from './_components/Navbar';
 import Footer from './_components/Footer';
@@ -18,8 +19,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'cms.idplay.co.id',
-  description: 'Homepage IDPlay di domain cms.idplay.co.id: paket, layanan, promo, testimoni, coverage.'
+  title: 'idplay.co.id',
+  description: 'Homepage IDPlay di domain idplay.co.id: paket, layanan, promo, testimoni, coverage.',
+  icons: {
+    icon: [{ url: '/favicon.webp?v=2', type: 'image/webp', sizes: 'any' }],
+    shortcut: [{ url: '/favicon.webp?v=2', type: 'image/webp' }],
+    apple: [{ url: '/favicon.webp?v=2', type: 'image/webp' }]
+  }
 };
 
 export const viewport: Viewport = {
@@ -29,6 +35,9 @@ export const viewport: Viewport = {
   viewportFit: 'cover'
 };
 
+export const revalidate = 0;
+export const dynamic = 'force-dynamic';
+
 export default function RootLayout({
   children
 }: Readonly<{
@@ -37,6 +46,52 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white`}>
+        <Script
+          src="https://www.googletagmanager.com/gtm.js?id=GTM-WVN7SRD3"
+          strategy="beforeInteractive"
+        />
+        <Script id="chunk-error-reload" strategy="afterInteractive">
+          {`(() => {
+            let reloading = false;
+            const shouldReload = (value: unknown) => {
+              const text =
+                typeof value === 'string'
+                  ? value
+                  : value && typeof value === 'object' && 'message' in value
+                    ? String((value as { message?: unknown }).message ?? '')
+                    : String(value ?? '');
+
+              return (
+                text.includes('ChunkLoadError') ||
+                text.includes('Loading chunk') ||
+                text.includes('CSS_CHUNK_LOAD_FAILED') ||
+                text.includes('net::ERR_ABORTED')
+              );
+            };
+
+            const reloadOnce = () => {
+              if (reloading) return;
+              reloading = true;
+              window.location.reload();
+            };
+
+            window.addEventListener('error', (event) => {
+              if (shouldReload((event as ErrorEvent)?.message)) reloadOnce();
+            });
+
+            window.addEventListener('unhandledrejection', (event) => {
+              if (shouldReload((event as PromiseRejectionEvent)?.reason)) reloadOnce();
+            });
+          })();`}
+        </Script>
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-WVN7SRD3"
+            height="0"
+            width="0"
+            style={{ display: 'none', visibility: 'hidden' }}
+          />
+        </noscript>
         <Navbar />
         {children}
         <Footer />

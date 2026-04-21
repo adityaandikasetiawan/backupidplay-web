@@ -8,14 +8,8 @@ import CompareProduct from './_components/CompareProduct';
 import CekCoverage from './_components/CekCoverage';
 import ServicesSection from './_components/Services';
 import ProductSection from './_components/Product';
-import { useState } from 'react';
-import { Metadata } from '@/app/type';
 
 export default function Home() {
-  const [pagination, setPagination] = useState<Metadata['pagination']>();
-  const [loading, setLoading] = useState(true);
-  const [fetching, setFetching] = useState(false);
-
   return (
     <div className="min-h-screen font-sans bg-white">
       <HeroSection />
